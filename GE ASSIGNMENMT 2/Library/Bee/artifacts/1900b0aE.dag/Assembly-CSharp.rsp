@@ -358,6 +358,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.2.17f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.2.17f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/boid.cs"
+"Assets/keepHigh.cs"
 "Assets/moveBoid.cs"
 "Assets/spawnBoids.cs"
 -langversion:9.0

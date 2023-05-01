@@ -12,7 +12,7 @@ public class spawnBoids : MonoBehaviour
     {
         for(int i = 0; i < boidNum; i++)
         {
-            Vector3 randPos = new Vector3(UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10));
+            Vector3 randPos = new Vector3(UnityEngine.Random.Range(0, 50), UnityEngine.Random.Range(50, 100), UnityEngine.Random.Range(0, 50));
             Instantiate(birdBoid, randPos, Quaternion.identity);
         }
     }

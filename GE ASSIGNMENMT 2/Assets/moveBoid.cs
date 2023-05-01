@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class moveBoid : MonoBehaviour
 {
-    public GameObject target;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -15,10 +13,7 @@ public class moveBoid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 directon = target.transform.position - transform.position;
-        Quaternion toRotate = Quaternion.FromToRotation(Vector3.up, directon);
-        transform.rotation = toRotate;
-
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 3 * Time.deltaTime);
+        transform.Translate(Vector3.up * 25 * Time.deltaTime);
     }
+
 }

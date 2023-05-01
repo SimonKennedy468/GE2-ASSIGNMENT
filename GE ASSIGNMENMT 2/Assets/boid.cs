@@ -7,44 +7,39 @@ public class boid : MonoBehaviour
 
     public GameObject[] allBoids;
 
-    public float centreStr = 1;
-    public float avoidStr = 0.3f;
-    public float alignStr = 0.5f;
+    public GameObject currCentre;
 
-    public float detectDistCheck = 10;
+    public float centreStr = 3;
+    public float avoidStr = 0.025f;
+    public float alignStr = 0.3f;
+
+    public float detectDistCheck = 75;
     public float avoidDistCheck = 3;
-    public float alignmentDistCheck = 5;
+    public float alignmentDistCheck = 15;
 
     public Vector3 vel;
-    Vector3 newPos;
 
     // Start is called before the first frame update
     void Start()
     {
         allBoids = GameObject.FindGameObjectsWithTag("Bird");
-        /*
-        for (int i = 0; i < allBoids.Length; i++)
-        {
-            Debug.Log(allBoids[i]);
-        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
-
+      
 
         Quaternion toRotate = Quaternion.FromToRotation(Vector3.up, vel);
         transform.rotation = toRotate;
 
         Cohesion();
-        Debug.Log("velocity is " + vel);
+        //Debug.Log("velocity is " + vel);
         transform.position += vel * Time.deltaTime;
 
 
 
     }
-
 
     void Cohesion()
     {
@@ -62,10 +57,15 @@ public class boid : MonoBehaviour
             }
         }
 
+        
+        
         if (boidCount > 1)
         {
+
+
             Vector3 avg = boidPosSum / boidCount;
             avg = avg.normalized;
+
             Vector3 turn = (avg - transform.position).normalized;
 
             float deltaTimeStr = centreStr * Time.deltaTime;
@@ -77,6 +77,9 @@ public class boid : MonoBehaviour
 
         }
     }
+
+    
+
 
     void Avoid()
     {
