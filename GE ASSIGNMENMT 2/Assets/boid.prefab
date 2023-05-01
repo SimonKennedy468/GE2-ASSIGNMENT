@@ -240,9 +240,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allBoids: []
   centreStr: 3
-  avoidStr: 0.05
+  avoidStr: 0.025
   alignStr: 0.03
   detectDistCheck: 20
-  avoidDistCheck: 5
-  alignmentDistCheck: 7
+  avoidDistCheck: 3
+  alignmentDistCheck: 15
   vel: {x: 1, y: 0, z: 0}
