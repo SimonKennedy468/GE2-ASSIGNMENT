@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class keepHigh : MonoBehaviour
 {
-
+    //empty target gameobjects
     public GameObject target;
     public GameObject landing;
 
+    //array to store obstacles
     public GameObject[] obstacle;
 
+    //store variable to represent boid energy levels 
     public float energy = 20f;
 
+    //values needed for force application
     public Vector3 vel;
     public float treeStr = 1;
     public float detectTree = 10;
 
+    //materials to show boid energy level
     public Material highE;
     public Material mediumE;
     public Material lowE;
 
+    //bools to check current energy
     public bool currEnergyHigh = false;
     public bool currEnergymedium = false;
     public bool currEnergylow = false;
@@ -33,12 +38,16 @@ public class keepHigh : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //get list of all obstacels
         obstacle = GameObject.FindGameObjectsWithTag("Tree");
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*Constantly check the current status of the boids energy levels. 
+         * As they fall, the material is changed to reflect how tired the boid is
+         */
         if (energy > 10 && currEnergyHigh == false)
         {
             this.GetComponent<Renderer>().material = highE;
@@ -71,6 +80,7 @@ public class keepHigh : MonoBehaviour
 
             
         }
+        //if its flyign high and has already rested
         if(highFlying == true && rested == true)
         {
             energy = energy - 1f * Time.deltaTime;
@@ -78,47 +88,29 @@ public class keepHigh : MonoBehaviour
         
     }
 
+    //flying low
     private void OnTriggerEnter(Collider other)
     {
         highFlying = false;
         
     }
-
+    //boid curls back up and away from the ground, back into the flock
     private void OnTriggerStay(Collider other)
     {
+        //just curling back up, looks towards a target in the sky and flys upwards towards it in a slerp
         if (rested == true)
         {
+            //stop the boid behaviours so the rotation isnt "corrected" back into the average flock point
             Destroy(GetComponent<boid>());
-            /*
-            Vector3 turnAway = Vector3.zero;
-
             
-            turnAway = turnAway.normalized;
-            
-
-            for (int i = 0; i < obstacle.Length; i++)
-            {
-                float dist = Vector3.Distance(obstacle[i].transform.position, this.transform.position);
-                
-                if (dist <= detectTree)
-                {
-                    turnAway = turnAway + (this.transform.position - obstacle[i].transform.position);
-                }
-            }
-
-            turnAway = turnAway.normalized;
-            vel = vel + treeStr * turnAway / (treeStr + 1);
-            vel = vel.normalized;
-
-            transform.rotation = Quaternion.FromToRotation(Vector3.up, vel);
-            */
             Quaternion look = Quaternion.LookRotation(target.transform.position - this.transform.position).normalized;
             
             transform.rotation = Quaternion.Slerp(transform.rotation, look, Time.deltaTime * 2);
-
-            energy = energy - 1f * Time.deltaTime;
+            
+            
         }
 
+        //When the bird is coming in for a landing to rest
         else if(other.gameObject.CompareTag("Ground") && rested == false)
         {
             Destroy(GetComponent<moveBoid>());
@@ -132,6 +124,7 @@ public class keepHigh : MonoBehaviour
             }
         }
 
+        //collided with tree, needs to move out of the way
         else
         {
             Quaternion look = Quaternion.LookRotation(target.transform.position - this.transform.position).normalized;
@@ -142,6 +135,7 @@ public class keepHigh : MonoBehaviour
         }
     }
 
+    
     private void OnTriggerExit(Collider other)
     {
         if (rested == true)
@@ -150,10 +144,12 @@ public class keepHigh : MonoBehaviour
         }
         highFlying = true;
 
+        //reset the velocity to keep boid moving in correct direction
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
 
+    //add the boid script back after half a second to avoid jitter
     IEnumerator wait()
     {
         Quaternion look = Quaternion.LookRotation(target.transform.position - this.transform.position).normalized;
