@@ -7,8 +7,14 @@ public class keepHigh : MonoBehaviour
 
     public GameObject target;
     public GameObject landing;
+
+    public GameObject[] obstacle;
+
     public float energy = 20f;
 
+    public Vector3 vel;
+    public float treeStr = 1;
+    public float detectTree = 10;
 
     public Material highE;
     public Material mediumE;
@@ -27,7 +33,7 @@ public class keepHigh : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        obstacle = GameObject.FindGameObjectsWithTag("Tree");
     }
 
     // Update is called once per frame
@@ -83,7 +89,31 @@ public class keepHigh : MonoBehaviour
         if (rested == true)
         {
             Destroy(GetComponent<boid>());
+            /*
+            Vector3 turnAway = Vector3.zero;
+
+            
+            turnAway = turnAway.normalized;
+            
+
+            for (int i = 0; i < obstacle.Length; i++)
+            {
+                float dist = Vector3.Distance(obstacle[i].transform.position, this.transform.position);
+                
+                if (dist <= detectTree)
+                {
+                    turnAway = turnAway + (this.transform.position - obstacle[i].transform.position);
+                }
+            }
+
+            turnAway = turnAway.normalized;
+            vel = vel + treeStr * turnAway / (treeStr + 1);
+            vel = vel.normalized;
+
+            transform.rotation = Quaternion.FromToRotation(Vector3.up, vel);
+            */
             Quaternion look = Quaternion.LookRotation(target.transform.position - this.transform.position).normalized;
+            
             transform.rotation = Quaternion.Slerp(transform.rotation, look, Time.deltaTime * 2);
 
             energy = energy - 1f * Time.deltaTime;
@@ -101,6 +131,15 @@ public class keepHigh : MonoBehaviour
                 gameObject.AddComponent<moveBoid>();
             }
         }
+
+        else
+        {
+            Quaternion look = Quaternion.LookRotation(target.transform.position - this.transform.position).normalized;
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, look, Time.deltaTime * 2);
+
+            gameObject.GetComponent<Rigidbody>().AddForce(transform.right * 0.1f, ForceMode.Impulse);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -110,6 +149,8 @@ public class keepHigh : MonoBehaviour
             StartCoroutine(wait());
         }
         highFlying = true;
+
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
 

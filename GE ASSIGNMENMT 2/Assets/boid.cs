@@ -7,6 +7,8 @@ public class boid : MonoBehaviour
 
     public GameObject[] allBoids;
 
+    public GameObject[] obstacle;
+
     public int boidCount;
     
 
@@ -14,9 +16,13 @@ public class boid : MonoBehaviour
     public float avoidStr = 0.025f;
     public float alignStr = 0.3f;
 
+    public float treeStr = 3;
+
     public float detectDistCheck = 20;
     public float avoidDistCheck = 3;
     public float alignmentDistCheck = 15;
+
+    public float detectTree = 33;
 
     public Vector3 vel;
 
@@ -24,7 +30,7 @@ public class boid : MonoBehaviour
     void Start()
     {
         allBoids = GameObject.FindGameObjectsWithTag("Bird");
-
+        obstacle = GameObject.FindGameObjectsWithTag("Tree");
     }
 
     // Update is called once per frame
@@ -40,7 +46,7 @@ public class boid : MonoBehaviour
 
         else
         {
-            Quaternion look = Quaternion.LookRotation(new Vector3(0,50,0) - this.transform.position).normalized;
+            Quaternion look = Quaternion.LookRotation(new Vector3(0,33,0) - this.transform.position).normalized;
             transform.rotation = Quaternion.Slerp(transform.rotation, look, Time.deltaTime * 2);
         }
 
@@ -104,6 +110,20 @@ public class boid : MonoBehaviour
 
         turnAway = turnAway.normalized;
         vel = vel + avoidStr * turnAway / (avoidStr + 1);
+        vel = vel.normalized;
+
+        for (int i = 0; i < obstacle.Length; i++)
+        {
+            float dist = Vector3.Distance(obstacle[i].transform.position, this.transform.position);
+
+            if (dist <= detectTree)
+            {
+                turnAway = turnAway + (this.transform.position - obstacle[i].transform.position);
+            }
+        }
+
+        turnAway = turnAway.normalized;
+        vel = vel + treeStr * turnAway / (treeStr + 1);
         vel = vel.normalized;
     }
 

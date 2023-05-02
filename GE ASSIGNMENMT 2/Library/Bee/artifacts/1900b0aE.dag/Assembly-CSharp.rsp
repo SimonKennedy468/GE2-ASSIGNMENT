@@ -360,9 +360,11 @@
 "Assets/boid.cs"
 "Assets/boidCentre.cs"
 "Assets/boidNew.cs"
+"Assets/flap.cs"
 "Assets/keepHigh.cs"
 "Assets/moveBoid.cs"
 "Assets/spawnBoids.cs"
+"Assets/treeSpawn.cs"
 -langversion:9.0
 
 /deterministic
