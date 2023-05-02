@@ -95,7 +95,6 @@ public class boid : MonoBehaviour
             
             avg = avg.normalized;
 
-            Debug.Log("avg = " + avg);
 
             Vector3 turn = (avg - this.transform.position).normalized;
 

@@ -14,7 +14,7 @@ public class treeSpawn : MonoBehaviour
          */
         for (int i = 0; i < boidNum; i++)
         {
-            Vector3 randPos = new Vector3(UnityEngine.Random.Range(-150, 150), UnityEngine.Random.Range(1, 1), UnityEngine.Random.Range(-150, 150));
+            Vector3 randPos = new Vector3(UnityEngine.Random.Range(-350, 350), UnityEngine.Random.Range(1, 1), UnityEngine.Random.Range(-350, 350));
             Instantiate(tree, randPos, Quaternion.identity);
         }
     }

@@ -92,7 +92,19 @@ public class keepHigh : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         highFlying = false;
-        
+        if (other.gameObject.CompareTag("Ground") && rested == false)
+        {
+            transform.Translate(0, 0.25f, 0);
+            Destroy(GetComponent<moveBoid>());
+            energy = energy + 5f * Time.deltaTime;
+            transform.LookAt(target.transform.position);
+            if (energy >= 20)
+            {
+                rested = true;
+
+                gameObject.AddComponent<moveBoid>();
+            }
+        }
     }
     //boid curls back up and away from the ground, back into the flock
     private void OnTriggerStay(Collider other)
