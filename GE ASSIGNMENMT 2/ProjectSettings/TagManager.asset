@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bird
   - Ground
+  - centre
+  - low
   layers:
   - Default
   - TransparentFX

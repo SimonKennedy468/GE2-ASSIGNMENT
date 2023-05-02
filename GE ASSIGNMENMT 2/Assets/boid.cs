@@ -7,13 +7,14 @@ public class boid : MonoBehaviour
 
     public GameObject[] allBoids;
 
-    public GameObject currCentre;
+    public int boidCount;
+    
 
-    public float centreStr = 3;
+    public float centreStr = 0.5f;
     public float avoidStr = 0.025f;
     public float alignStr = 0.3f;
 
-    public float detectDistCheck = 75;
+    public float detectDistCheck = 20;
     public float avoidDistCheck = 3;
     public float alignmentDistCheck = 15;
 
@@ -23,32 +24,36 @@ public class boid : MonoBehaviour
     void Start()
     {
         allBoids = GameObject.FindGameObjectsWithTag("Bird");
+
     }
 
     // Update is called once per frame
     void Update()
     {
-      
-
-        Quaternion toRotate = Quaternion.FromToRotation(Vector3.up, vel);
-        transform.rotation = toRotate;
-
         Cohesion();
-        //Debug.Log("velocity is " + vel);
-        transform.position += vel * Time.deltaTime;
 
+        if(boidCount > 1)
+        {
+            Quaternion toRotate = Quaternion.FromToRotation(Vector3.up, vel);
+            transform.rotation = toRotate;
+        }
 
+        else
+        {
+            Quaternion look = Quaternion.LookRotation(new Vector3(0,50,0) - this.transform.position).normalized;
+            transform.rotation = Quaternion.Slerp(transform.rotation, look, Time.deltaTime * 2);
+        }
 
     }
 
     void Cohesion()
     {
-        int boidCount = 0;
-        Vector3 boidPosSum = transform.position;
+        boidCount = 0;
+        Vector3 boidPosSum = this.transform.position;
 
         for (int i = 0; i < allBoids.Length; i++)
         {
-            float dist = Vector3.Distance(allBoids[i].transform.position, transform.position);
+            float dist = Vector3.Distance(allBoids[i].transform.position, this.transform.position);
 
             if (dist <= detectDistCheck)
             {
@@ -57,25 +62,27 @@ public class boid : MonoBehaviour
             }
         }
 
-        
-        
         if (boidCount > 1)
         {
-
-
-            Vector3 avg = boidPosSum / boidCount;
+            Vector3 avg = (boidPosSum / boidCount);
+            
             avg = avg.normalized;
 
-            Vector3 turn = (avg - transform.position).normalized;
+            Debug.Log("avg = " + avg);
+
+            Vector3 turn = (avg - this.transform.position).normalized;
 
             float deltaTimeStr = centreStr * Time.deltaTime;
             vel = vel + deltaTimeStr * turn / (deltaTimeStr + 1);
             vel = vel.normalized;
 
+
+
             Avoid();
             Allign();
-
         }
+
+        
     }
 
     
@@ -87,11 +94,11 @@ public class boid : MonoBehaviour
 
         for(int i = 0; i < allBoids.Length; i++)
         {
-            float dist = Vector3.Distance(allBoids[i].transform.position, transform.position);
+            float dist = Vector3.Distance(allBoids[i].transform.position, this.transform.position);
 
             if(dist <= avoidDistCheck)
             {
-                turnAway = turnAway + (transform.position - allBoids[i].transform.position);
+                turnAway = turnAway + (this.transform.position - allBoids[i].transform.position);
             }
         }
 
@@ -107,7 +114,7 @@ public class boid : MonoBehaviour
 
         for(int i = 0; i < allBoids.Length; i++)
         {
-            float dist = Vector3.Distance(allBoids[i].transform.position, transform.position);
+            float dist = Vector3.Distance(allBoids[i].transform.position, this.transform.position);
             if(dist <= alignmentDistCheck)
             {
                 dirSum = dirSum + allBoids[i].transform.up;

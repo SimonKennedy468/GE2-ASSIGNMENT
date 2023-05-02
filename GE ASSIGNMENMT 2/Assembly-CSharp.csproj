@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\keepHigh.cs" />
+    <Compile Include="Assets\boidNew.cs" />
+    <Compile Include="Assets\boidCentre.cs" />
     <Compile Include="Assets\spawnBoids.cs" />
     <Compile Include="Assets\boid.cs" />
     <Compile Include="Assets\moveBoid.cs" />

@@ -100,14 +100,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allBoids: []
-  currCentre: {fileID: 2077270267896157453, guid: 25bdb616b153abb43974df447e81dfa6, type: 3}
+  boidCount: 0
   centreStr: 3
-  avoidStr: 0.025
-  alignStr: 0.03
-  detectDistCheck: 10
-  avoidDistCheck: 3
+  avoidStr: 0.25
+  alignStr: 3
+  detectDistCheck: 50
+  avoidDistCheck: 5
   alignmentDistCheck: 15
-  vel: {x: 1, y: 0, z: 0}
+  vel: {x: 0, y: 0, z: 0}
 --- !u!114 &4203621324907774379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +133,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 198945890935706577, guid: db4c9d2ceac582b4aaa99aaee6f567a5, type: 3}
+  landing: {fileID: 5865854170974199748, guid: b955bd7afe9b1d845b3828504a2dc596, type: 3}
+  energy: 20
+  highE: {fileID: 2100000, guid: e8ceb3c8b2257e14ea80b9963b69cfc8, type: 2}
+  mediumE: {fileID: 2100000, guid: 0980d6d0cc462094d909e5c41a903716, type: 2}
+  lowE: {fileID: 2100000, guid: 4686fabc29ab88741893557681a04bbe, type: 2}
+  rested: 1
+  highFlying: 0
 --- !u!136 &3741469526951439757
 CapsuleCollider:
   m_ObjectHideFlags: 0
