@@ -14,9 +14,9 @@ public class keepHigh : MonoBehaviour
     public Material mediumE;
     public Material lowE;
 
-    bool currEnergyHigh = false;
-    bool currEnergymedium = false;
-    bool currEnergylow = false;
+    public bool currEnergyHigh = false;
+    public bool currEnergymedium = false;
+    public bool currEnergylow = false;
 
     public bool rested = true;
 
@@ -37,6 +37,7 @@ public class keepHigh : MonoBehaviour
         {
             this.GetComponent<Renderer>().material = highE;
             currEnergylow = false;
+            currEnergymedium = false;
             currEnergyHigh = true;
             
         }
