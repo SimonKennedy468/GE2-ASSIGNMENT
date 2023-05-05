@@ -85,7 +85,7 @@ public class aloneState : boidBaseState
                 Debug.DrawRay(boidState.transform.position, newDir, Color.red);
 
 
-                if (boidState.transform.position.x >= 150 || boidState.transform.position.x <= -150 || boidState.transform.position.z >= 150 || boidState.transform.position.z <= -150 || boidState.transform.position.y >= 100)
+                if (boidState.transform.position.x >= 150 || boidState.transform.position.x <= -150 || boidState.transform.position.z >= 150 || boidState.transform.position.z <= -150 || boidState.transform.position.y >= 100 || boidState.transform.position.y <= 5)
                 {
                     boidState.SwitchState(boidState.returning);
 
@@ -106,10 +106,6 @@ public class aloneState : boidBaseState
     }
     public override void OnColissionEnter(boidStateManager boidState, Collision collision)
     {
-        Vector3 collisionDir = collision.transform.position - boidState.transform.position;
-        Vector3 avoidDir = Vector3.RotateTowards(boidState.transform.forward, collisionDir, 1f * Time.deltaTime, -1.0f);
-        boidState.transform.rotation = Quaternion.LookRotation(avoidDir);
-        boidState.gameObject.GetComponent<Rigidbody>().AddForce(boidState.transform.up * -1f, ForceMode.Impulse);
 
     }
 

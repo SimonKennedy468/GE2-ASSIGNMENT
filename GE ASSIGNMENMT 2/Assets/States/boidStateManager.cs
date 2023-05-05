@@ -43,6 +43,5 @@ public class boidStateManager : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        currentState.OnColissionEnter(this, collision);
     }
 }

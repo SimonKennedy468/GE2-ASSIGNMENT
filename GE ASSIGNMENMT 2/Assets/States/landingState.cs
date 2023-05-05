@@ -20,7 +20,7 @@ public class landingState : boidBaseState
 
         }
 
-        landingPoint = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+        landingPoint = new GameObject();
 
         landingPoint.transform.Translate(potentialPoints[UnityEngine.Random.Range(0, 4)] + boidState.transform.position - new Vector3(0, boidState.transform.position.y, 0));
 
@@ -35,6 +35,7 @@ public class landingState : boidBaseState
 
         if(Vector3.Distance(boidState.transform.position, landingPoint.transform.position) <= 2 )
         {
+            Object.Destroy(landingPoint);
             boidState.SwitchState(boidState.resting);
         }
 
