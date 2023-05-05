@@ -5,48 +5,50 @@ using UnityEngine;
 public class hunter : MonoBehaviour
 {
 
-    public float timePassed = 5f;
 
     public List<Vector3> potentialPoints = new List<Vector3>();
     public GameObject travelPoint;
+    public GameObject boidManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        travelPoint = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-    }
+        travelPoint = new GameObject();
+
+        boidManager = GameObject.FindGameObjectWithTag("boidManager");
+
+
+        transform.position = new Vector3(Random.Range(-150, 150), 0, Random.Range(-150, 150));
+}
 
     // Update is called once per frame
     void Update()
     {
-        timePassed += Time.deltaTime;
-        if (timePassed >= 3f)
+        Vector3 closest = new Vector3(500, 500, 500);
+        for(int i = 0; i < boidManager.GetComponent<boidList>().allTreesList.Count; i++)
         {
-            for (int i = 0; i < 5; i++)
+            if(Vector3.Distance(boidManager.GetComponent<boidList>().allTreesList[i].transform.position, this.transform.position) < Vector3.Distance(closest, this.transform.position))
             {
-                int radius = 15;
-                float angle = i * Mathf.PI * 2 / 5;
-                float x = Mathf.Sin(angle) * radius;
-                float z = Mathf.Cos(angle) * radius;
-
-                potentialPoints.Add(new Vector3(x, -this.transform.position.y, z));
-
+                closest = boidManager.GetComponent<boidList>().allTreesList[i].transform.position;
             }
-
-
-            travelPoint.transform.Translate(potentialPoints[UnityEngine.Random.Range(0, 4)]);
-
- 
-
-            potentialPoints.Clear();
-            timePassed = 0;
-
-            
         }
-        Vector3 targetDir = travelPoint.transform.position - this.transform.position;
 
-        Vector3 newDir = Vector3.RotateTowards(this.transform.forward, targetDir, 3 * Time.deltaTime, 0.0f);
+        Vector3 treeDir = closest - this.transform.position;
+
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, treeDir, 3 * Time.deltaTime, 0.0f);
         this.transform.rotation = Quaternion.LookRotation(newDir);
-        this.transform.Translate(Vector3.forward * 20 * Time.deltaTime);
+        transform.Translate(Vector3.forward * 2.5f * Time.deltaTime);
+
     }
+
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        Debug.Log("Collided, chopping tree");
+        if (collision.gameObject.tag == "Tree")
+        {
+            boidManager.GetComponent<boidList>().allTreesList.Remove(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
+}
 }

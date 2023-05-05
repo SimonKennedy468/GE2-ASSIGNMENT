@@ -6,9 +6,11 @@ public class landingState : boidBaseState
 {
 
     public List<Vector3> potentialPoints = new List<Vector3>();
+    public GameObject landingPointScan;
     public GameObject landingPoint;
     public override void EnterState(boidStateManager boidState)
     {
+        landingPoint = new GameObject();
         for (int i = 0; i < 5; i++)
         {
             int radius = 25;
@@ -16,13 +18,19 @@ public class landingState : boidBaseState
             float x = Mathf.Sin(angle) * radius;
             float z = Mathf.Cos(angle) * radius;
 
-            potentialPoints.Add(new Vector3(x, 0, z));
+            potentialPoints.Add(new Vector3(x, boidState.transform.position.y, z));
 
         }
 
-        landingPoint = new GameObject();
+        landingPointScan = new GameObject();
 
-        landingPoint.transform.Translate(potentialPoints[UnityEngine.Random.Range(0, 4)] + boidState.transform.position - new Vector3(0, boidState.transform.position.y, 0));
+        landingPointScan.transform.Translate(potentialPoints[UnityEngine.Random.Range(0, 4)] + boidState.transform.position);
+        Ray landingRay = new Ray(landingPointScan.transform.position, -landingPointScan.transform.up);
+        RaycastHit hit;
+        if(Physics.Raycast(landingRay, out hit))
+        {
+            landingPoint.transform.position = hit.point;
+        }
 
         potentialPoints.Clear();
     }
@@ -40,7 +48,7 @@ public class landingState : boidBaseState
         }
 
         Debug.Log("Energy is + " + boidState.GetComponent<energy>().boidEnergy);
-        if(boidState.GetComponent<energy>().boidEnergy <= 0)
+        if(landingPoint.transform.position.y <=1)
         {
             boidState.SwitchState(boidState.dead);
         }

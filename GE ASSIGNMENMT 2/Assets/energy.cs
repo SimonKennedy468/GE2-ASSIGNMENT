@@ -64,5 +64,9 @@ public class energy : MonoBehaviour
 
 
         }
+        else if (boidEnergy >= 20)
+        {
+            resting = false;
+        }
     }
 }

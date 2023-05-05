@@ -5,21 +5,26 @@ using UnityEngine;
 public class groupState : boidBaseState
 {
 
-    public GameObject[] allBoids;
+    
     public GameObject centerPoint;
 
-    bool returning;
+    public GameObject boidManager;
+
+
+
 
 
 
     public override void EnterState(boidStateManager boidState)
     {
-        allBoids = GameObject.FindGameObjectsWithTag("Bird");
+        
 
-        if(centerPoint == null)
+        if (centerPoint == null)
         {
             centerPoint = new GameObject();
         }
+        boidManager = GameObject.FindGameObjectWithTag("boidManager");
+
     }
     public override void UpdateState(boidStateManager boidState)
     {
@@ -66,13 +71,13 @@ public class groupState : boidBaseState
         Vector3 posSum = new Vector3(0, 0, 0);
         int count = 0;
 
-        for (int i = 0; i < allBoids.Length; i++)
+        for (int i = 0; i < boidManager.GetComponent<boidList>().allBoidsList.Count; i++)
         {
-            float dist = Vector3.Distance(boidState.transform.position, allBoids[i].transform.position);
+            float dist = Vector3.Distance(boidState.transform.position, boidManager.GetComponent<boidList>().allBoidsList[i].transform.position);
             if (dist <= 25)
             {
                 count++;
-                posSum += allBoids[i].transform.position;
+                posSum += boidManager.GetComponent<boidList>().allBoidsList[i].transform.position;
             }
         }
 

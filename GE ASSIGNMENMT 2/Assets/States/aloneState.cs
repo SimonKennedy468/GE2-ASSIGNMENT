@@ -10,7 +10,8 @@ public class aloneState : boidBaseState
     public bool needPoint = true;
     public float timePassed = 3f;
 
-    public GameObject[] allBoids;
+    public GameObject boidManager;
+
 
 
     float seconds = 3f;
@@ -20,12 +21,13 @@ public class aloneState : boidBaseState
     public override void EnterState(boidStateManager boidState)
     {
         self = boidState.transform;
-        allBoids = GameObject.FindGameObjectsWithTag("Bird");
-        if(travelPoint == null)
+
+
+        if (travelPoint == null)
         {
             travelPoint = new GameObject();
         }
-        
+        boidManager = GameObject.FindGameObjectWithTag("boidManager");
 
     }
 
@@ -45,8 +47,8 @@ public class aloneState : boidBaseState
 
             }
 
-            
-            
+
+
 
 
             if (self.position.y >= 25)
@@ -65,24 +67,23 @@ public class aloneState : boidBaseState
         }
         else
         {
-            for (int i = 0; i < allBoids.Length; i++)
+            for (int i = 0; i < boidManager.GetComponent<boidList>().allBoidsList.Count; i++)
             {
-                if(boidState.transform.position != allBoids[i].transform.position)
+                if (boidState.transform.position != boidManager.GetComponent<boidList>().allBoidsList[i].transform.position)
                 {
-                    float dist = Vector3.Distance(boidState.transform.position, allBoids[i].transform.position);
+                    float dist = Vector3.Distance(boidState.transform.position, boidManager.GetComponent<boidList>().allBoidsList[i].transform.position);
                     if (dist <= 25)
                     {
                         boidState.SwitchState(boidState.group);
                     }
                 }
-                
+
             }
             if (travelPoint != null)
             {
                 Vector3 targetDir = travelPoint.transform.position - boidState.transform.position;
 
                 Vector3 newDir = Vector3.RotateTowards(boidState.transform.forward, targetDir, 3 * Time.deltaTime, 0.0f);
-                Debug.DrawRay(boidState.transform.position, newDir, Color.red);
 
 
                 if (boidState.transform.position.x >= 150 || boidState.transform.position.x <= -150 || boidState.transform.position.z >= 150 || boidState.transform.position.z <= -150 || boidState.transform.position.y >= 100 || boidState.transform.position.y <= 5)
@@ -98,7 +99,7 @@ public class aloneState : boidBaseState
             }
         }
 
-        if(boidState.GetComponent<energy>().boidEnergy <= 10)
+        if (boidState.GetComponent<energy>().boidEnergy <= 10)
         {
             boidState.SwitchState(boidState.landing);
         }
@@ -110,3 +111,4 @@ public class aloneState : boidBaseState
     }
 
 }
+

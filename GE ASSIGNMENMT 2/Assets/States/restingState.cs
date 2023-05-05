@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class restingState : boidBaseState
 {
+
+    public float hitInspect;
     public override void EnterState(boidStateManager boidState)
     {
         Object.Destroy(boidState.GetComponent<moveBoid>());
@@ -16,6 +18,20 @@ public class restingState : boidBaseState
         {
             boidState.gameObject.AddComponent<moveBoid>();
             boidState.SwitchState(boidState.alone);
+        }
+
+        Ray landingRay = new Ray(boidState.transform.position, -Vector3.up);
+        Debug.DrawRay(boidState.transform.position, -Vector3.up, Color.red);
+        RaycastHit hit;
+        if (Physics.Raycast(landingRay, out hit))
+        {
+            hitInspect = hit.point.y;
+            if (hit.point.y <= 2f)
+            {
+                boidState.gameObject.AddComponent<moveBoid>();
+
+                boidState.SwitchState(boidState.dead);
+            }
         }
     }
 

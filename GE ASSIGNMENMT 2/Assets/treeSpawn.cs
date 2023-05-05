@@ -7,6 +7,7 @@ public class treeSpawn : MonoBehaviour
     // Start is called before the first frame update
     public int boidNum = 25;
     public GameObject tree;
+    public bool treesSpawned = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,6 +18,7 @@ public class treeSpawn : MonoBehaviour
             Vector3 randPos = new Vector3(UnityEngine.Random.Range(-150, 150), UnityEngine.Random.Range(1, 1), UnityEngine.Random.Range(-150, 150));
             Instantiate(tree, randPos, Quaternion.identity);
         }
+        treesSpawned = true;
     }
 
     // Update is called once per frame
