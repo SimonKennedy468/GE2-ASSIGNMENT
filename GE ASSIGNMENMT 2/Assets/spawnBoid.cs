@@ -16,7 +16,5 @@ public class spawnBoid : MonoBehaviour
         boidManager = GameObject.FindGameObjectWithTag("boidManager");
         GameObject go = GameObject.Instantiate(bird, new Vector3(Random.Range(-50, 5), 5 , Random.Range(-50, 5)), Quaternion.identity);
         boidManager.GetComponent<boidList>().allBoidsList.Add(go);
-        
-
     }
 }
