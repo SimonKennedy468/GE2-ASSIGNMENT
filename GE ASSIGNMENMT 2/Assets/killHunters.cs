@@ -14,6 +14,5 @@ public class killHunters : MonoBehaviour
         {
             Destroy(hunters[i]);
         }
-        Debug.Log("nature is saved");
     }
 }

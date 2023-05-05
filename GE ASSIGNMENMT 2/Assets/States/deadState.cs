@@ -1,3 +1,4 @@
+//state for boid migration
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,10 @@ public class deadState : boidBaseState
     public override void EnterState(boidStateManager boidState)
     {
         boidManager = GameObject.FindGameObjectWithTag("boidManager");
-        Debug.Log("coudlnt find a tree, goodbye :(");
     }
     public override void UpdateState(boidStateManager boidState)
     {
+        //fly to distance and then destroy after 10 seconds
         timePassed += Time.deltaTime;
         if (timePassed >= 10f)
         {

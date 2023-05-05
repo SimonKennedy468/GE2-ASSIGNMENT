@@ -26,6 +26,7 @@ public class energy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //measure energy levels and set materials accordingly
         if(resting == false)
         {
             boidEnergy = boidEnergy - 1f * Time.deltaTime;

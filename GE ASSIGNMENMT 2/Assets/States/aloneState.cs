@@ -1,7 +1,7 @@
+//state for when boid is on its own
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class aloneState : boidBaseState
 {
 
@@ -12,16 +12,14 @@ public class aloneState : boidBaseState
 
     public GameObject boidManager;
 
-
-
     float seconds = 3f;
 
     public Transform self;
 
     public override void EnterState(boidStateManager boidState)
     {
+        //get transform of self
         self = boidState.transform;
-
 
         if (travelPoint == null)
         {
@@ -33,9 +31,11 @@ public class aloneState : boidBaseState
 
     public override void UpdateState(boidStateManager boidState)
     {
+        //check time passed, done here as co-routine would run correctly waiting for 3 seconds, then run every frame
         timePassed += Time.deltaTime;
         if (timePassed >= 3f)
         {
+            //generate 5 points in a circle, then pick one at random
             for (int i = 0; i < 5; i++)
             {
                 int radius = 25;
@@ -46,10 +46,6 @@ public class aloneState : boidBaseState
                 potentialPoints.Add(new Vector3(x, UnityEngine.Random.Range(5, 15), z));
 
             }
-
-
-
-
 
             if (self.position.y >= 25)
             {
@@ -65,8 +61,10 @@ public class aloneState : boidBaseState
             potentialPoints.Clear();
             timePassed = 0;
         }
+
         else
         {
+            //check for nearby boids and change state if necessary
             for (int i = 0; i < boidManager.GetComponent<boidList>().allBoidsList.Count; i++)
             {
                 if (boidState.transform.position != boidManager.GetComponent<boidList>().allBoidsList[i].transform.position)
@@ -79,6 +77,7 @@ public class aloneState : boidBaseState
                 }
 
             }
+            //travel to randomly set point
             if (travelPoint != null)
             {
                 Vector3 targetDir = travelPoint.transform.position - boidState.transform.position;
@@ -89,7 +88,6 @@ public class aloneState : boidBaseState
                 if (boidState.transform.position.x >= 150 || boidState.transform.position.x <= -150 || boidState.transform.position.z >= 150 || boidState.transform.position.z <= -150 || boidState.transform.position.y >= 100 || boidState.transform.position.y <= 5)
                 {
                     boidState.SwitchState(boidState.returning);
-
                 }
 
                 else
@@ -98,7 +96,7 @@ public class aloneState : boidBaseState
                 }
             }
         }
-
+        //check energy levels
         if (boidState.GetComponent<energy>().boidEnergy <= 10)
         {
             boidState.SwitchState(boidState.landing);

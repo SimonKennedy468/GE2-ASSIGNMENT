@@ -1,3 +1,4 @@
+//State for landing the boid
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class landingState : boidBaseState
     public GameObject landingPoint;
     public override void EnterState(boidStateManager boidState)
     {
+        //generate 5 points, shoot a ray down. The hit point of the ray is the landing point
         landingPoint = new GameObject();
         for (int i = 0; i < 5; i++)
         {
@@ -36,18 +38,19 @@ public class landingState : boidBaseState
     }
     public override void UpdateState(boidStateManager boidState)
     {
+        //travel to landing point
         Vector3 targetDir = landingPoint.transform.position - boidState.transform.position;
 
         Vector3 landDir = Vector3.RotateTowards(boidState.transform.forward, targetDir, 3f * Time.deltaTime, 0.0f);
         boidState.transform.rotation = Quaternion.LookRotation(landDir);
 
+        //check if landed
         if(Vector3.Distance(boidState.transform.position, landingPoint.transform.position) <= 2 )
         {
             Object.Destroy(landingPoint);
             boidState.SwitchState(boidState.resting);
         }
-
-        Debug.Log("Energy is + " + boidState.GetComponent<energy>().boidEnergy);
+        //check if there was no tree
         if(landingPoint.transform.position.y <=1)
         {
             boidState.SwitchState(boidState.dead);
