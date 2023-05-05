@@ -8,10 +8,10 @@ Student Number: C19496436
 
 Class Group: DT211c / TU857
 
-Video: [Youtube]()
+Video: [Youtube](https://youtu.be/2orB1jQS104)
 
 ## Descripotion of the Project
-
+This program runs a simulation of a flock of approximatly 150 birds. they will fly through groups if they can, or on their own. As time goes on, they grow tired and will land in the trees. if they cannot land in the trees, they will leave. There is also a hunter going through the forest cutting down the trees. If the birds dont have a tree below them, they will leave. 
 
 ## Instructions for use
 there are four main buttons on the screen
@@ -35,47 +35,53 @@ the UI implements 4 buttons. these buttons call a relevant gameobject with a scr
 
 | Class/asset | Source |
 | ----------- | ------ |
-|  |  |
-| | |
-|  | Self Written |
-|  | Self Written |
-|  | modified from [refrence]() |
-|  | modified from [refrence]() |
-|  | Self Written |
-|  | from [refrence]() |
-|  | Self Made |
-|  | Self Made |
-|  | Self Made |
-|  | modified from [refrence]() |
-|  | from [refrence]() |
-|  | from [refrence]() |
+|  boidBaseState | modified from [refrence](https://www.youtube.com/watch?v=Vt8aZDPzRjI)  |
+|  boidStateManager | modified from [refrence](https://www.youtube.com/watch?v=Vt8aZDPzRjI)  |
+|  aloneState | self Written  |
+|  groupState | self Written |
+|  deadState | self Written |
+|  landingState | self Written |
+|  restingState | self Written |
+
+| boidList | self Written |
+| calculateCenter | self Written |
+| energy | self Written |
+| boidList | self Written |
+| flapLeft | Self Written |
+| flapRight | Self Written |
+| hunter | self Written |
+| killHunters | self Written |
+| moveBoid | self Written |
+| spawnBoid | self Written |
+| spawnBoids | self Written |
+| spawnHunter | self Written |
+| spawnSingletree | self Written |
+| treeSpawn | self Written |
+
+| oak_tree | from [refrence](https://assetstore.unity.com/packages/3d/vegetation/trees/free-trees-103208) |
+
 
 
 
 
 ## Refrences 
-* 
-* 
-*  
-* 
-* 
+* https://blog.yarsalabs.com/flock-simulation-using-boids-in-unity/
+* https://www.youtube.com/watch?v=Vt8aZDPzRjI
+* https://assetstore.unity.com/packages/3d/vegetation/trees/free-trees-103208
+
  
 # What I am most proud of in the assignment
 I am most proud of the boids implementation of a state machine. as there are many, many different things being checked each frame, along with the awkward distance check algorithm, running all these in a single script would have exacerbated issues. to remedy this, the boids implement a finite state machine, running only the necessary scripts based on their current condition. 
 
-```cs
-{
-    
-}
-```
 
 # What I learned
 in this assignment, I was able to learn how to implement boids, to flock, align and avoid each other. I learned how to implement a finite state machine, and got experience in using a user interface. 
 
 ## Known issues
 
-*boids will not avoid trees or each other and phase through them
+* boids will not avoid trees or each other and phase through them
 * boids when flocking trend upwards 
 * distance checking algorithm needs optimisation. 
 * timer checks are run in the update methods rather than a co-routine. this is because when they were tried, they would correctly wait the correct time once, then execute every frame.
-*missing animations on tree growth and cut down 
+* missing animations on tree growth and cut down 
+* UI locked to static position, doesnt scale with game window size
