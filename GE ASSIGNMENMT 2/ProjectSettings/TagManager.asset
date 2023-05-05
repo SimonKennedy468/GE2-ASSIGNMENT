@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - centre
   - low
+  - Tree
+  - detect
   layers:
   - Default
   - TransparentFX

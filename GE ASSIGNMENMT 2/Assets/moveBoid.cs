@@ -13,8 +13,7 @@ public class moveBoid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //move boid forward along its y axis
-        transform.Translate(Vector3.up * 33 * Time.deltaTime);
-    }
+        transform.Translate(Vector3.forward * 33 * Time.deltaTime);
 
+    }
 }

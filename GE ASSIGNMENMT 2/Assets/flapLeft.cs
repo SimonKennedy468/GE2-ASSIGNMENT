@@ -33,7 +33,7 @@ public class flapLeft : MonoBehaviour
     IEnumerator flapUp()
     {
         
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSecondsRealtime(0.25f);
         up = false;
         down = true;
     }
@@ -42,7 +42,7 @@ public class flapLeft : MonoBehaviour
     IEnumerator flapdown()
     {
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSecondsRealtime(0.25f);
         up = true;
         down = false;
     }

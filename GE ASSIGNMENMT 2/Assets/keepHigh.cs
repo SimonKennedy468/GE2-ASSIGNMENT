@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class keepHigh : MonoBehaviour
 {
     //empty target gameobjects
@@ -48,6 +48,7 @@ public class keepHigh : MonoBehaviour
         /*Constantly check the current status of the boids energy levels. 
          * As they fall, the material is changed to reflect how tired the boid is
          */
+/*
         if (energy > 10 && currEnergyHigh == false)
         {
             this.GetComponent<Renderer>().material = highE;
@@ -160,3 +161,4 @@ public class keepHigh : MonoBehaviour
 
     
 }
+*/

@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/basicBoids.unity
+- path: Assets/Scenes/newBoids.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
