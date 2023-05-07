@@ -42,7 +42,6 @@ the UI implements 4 buttons. these buttons call a relevant gameobject with a scr
 |  deadState | self Written |
 |  landingState | self Written |
 |  restingState | self Written |
-
 | boidList | self Written |
 | calculateCenter | self Written |
 | energy | self Written |
@@ -57,7 +56,6 @@ the UI implements 4 buttons. these buttons call a relevant gameobject with a scr
 | spawnHunter | self Written |
 | spawnSingletree | self Written |
 | treeSpawn | self Written |
-
 | oak_tree | from [refrence](https://assetstore.unity.com/packages/3d/vegetation/trees/free-trees-103208) |
 
 
